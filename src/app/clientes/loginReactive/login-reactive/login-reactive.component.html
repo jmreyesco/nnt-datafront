@@ -1,0 +1,78 @@
+<form id="contactForm" [formGroup]="form" (ngSubmit)="submit(form.value)">
+  <div class="form-group">
+    <label for="suscripcion">Tipo de documentos</label>
+    <select
+      class="form-control"
+      id="suscripcion"
+      name="suscripcion"
+      formControlName="suscripcion"
+    >
+      <option *ngFor="let suscripcion of tipos" [value]="suscripcion.value">
+        {{ suscripcion.text }}
+      </option>
+    </select>
+
+    <div
+      *ngIf="suscripcion.invalid && (suscripcion.dirty || suscripcion.touched)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="suscripcion.errors.required">
+        El tipo de documento es requerido
+      </div>
+    </div>
+  </div>
+  <div>
+    <label for="suscripcion">Numero de documentos</label>
+    <input
+      type="text"
+      placeholder="1039454860"
+      class="form-control"
+      name="firstname"
+      formControlName="firstname"
+    />
+
+    <div
+      *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="firstname.errors.required">
+        El nombre de usuario es requerido
+      </div>
+
+      <div *ngIf="firstname.errors.minlength">
+        La longitud mínima del password es 8 caracteres
+      </div>
+
+      <div *ngIf="firstname.errors.maxlength">
+        La longitud maxima del password es 11 caracteres
+      </div>
+      <div *ngIf="firstname.errors.pattern">Solo se admiten numeros</div>
+    </div>
+  </div>
+  <br />
+
+  <br />
+
+  <div>
+    <button
+      id="btnSubmit"
+      mat-raised-button
+      type="submit"
+      class="btn btn-primary btn-block"
+      style="border-radius: 60px; background-color: gray; border-color: gray"
+      [disabled]="form.invalid"
+      name="submit"
+    >
+      <div *ngIf="this.form.valid; else elseBlock">
+        <a
+          [routerLink]="['/clientes/form', form.value.firstname]"
+          routerLinkActive="class-name"
+          style="color: white"
+        >
+          Buscar</a
+        >
+      </div>
+      <ng-template #elseBlock> <a> Buscar</a></ng-template>
+    </button>
+  </div>
+</form>
